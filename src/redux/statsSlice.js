@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 // inside catch block
@@ -18,12 +18,12 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
     return response.data;
   } catch (error) {
     if (error.response?.status === 401) {
-      // const navigate = useNavigate();
+      const navigate = useNavigate();
       // Clear user data from localStorage 
       // const navigate = useNavigate();or Redux
       localStorage.removeItem("user"); // or dispatch logout action
-      // navigate("/login"); // Redirect to login page
-      window.location.href = "/login";
+      navigate("/login"); // Redirect to login page
+      // window.location.href = "/login";
     }
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     

@@ -13,13 +13,19 @@ import ClientStatus from './ClientStatus';
 import UploadImages from './UploadImages';
 import UploadClientBT from './UploadClientBT';
 import Analytics from './Analytics';
+import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
-
 
   const dispatch = useDispatch();
 
   // Assuming your Redux slice state is at state.stats
-  
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem("token");
+    if (!isAuthenticated) {
+      navigate("/login"); // ✅ this will work only inside useEffect or event
+    }
+  }, []);
   const loading = useSelector(state => state.stats.loading);
   const error = useSelector(state => state.stats.error);
 ;

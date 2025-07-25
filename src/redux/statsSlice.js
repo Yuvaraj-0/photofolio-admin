@@ -11,7 +11,7 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
   const navigate = useNavigate();
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.get(`${API_URL}/api/stats`, {
+    const response = await axios.get(`${API_URL}/api/stats/verify`, {
       
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -21,7 +21,7 @@ const CSelectedImg = () => {
   } = useSelector((state) => state.clientImages || {});
 
   const {
-    deleteStatus,
+    // deleteStatus,
     deleteError,
   } = useSelector((state) => state.selImages || {}); // Assuming the slice is named selImages
 

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL;
 export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAPI) => {
+  const navigate = useNavigate();
   try {
     const token = localStorage.getItem('token');
     const response = await axios.get(`${API_URL}/api/stats`, {
@@ -18,7 +19,7 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
     return response.data;
   } catch (error) {
     if (error.response?.status === 401) {
-      const navigate = useNavigate();
+      
       // Clear user data from localStorage 
       // const navigate = useNavigate();or Redux
       localStorage.removeItem("user"); // or dispatch logout action

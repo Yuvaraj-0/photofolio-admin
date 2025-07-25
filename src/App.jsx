@@ -30,8 +30,8 @@ function App() {
     dispatch(restoreAuth());
   }, [dispatch]);
   return (
-    <BrowserRouter basename="/Photobooth" >
-      {/* ✅ Show navbar only when logged in */}
+    <BrowserRouter  >
+      {/* ✅ Show navbar only when logged in basename="/Photobooth"*/}
       {isLoggedIn && <Navbar />}
 
       <Routes>

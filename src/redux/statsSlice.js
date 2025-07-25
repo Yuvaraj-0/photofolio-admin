@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+// inside catch block
+
+
 const API_URL = import.meta.env.VITE_API_URL;
 export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAPI) => {
   try {
@@ -12,9 +18,11 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
     return response.data;
   } catch (error) {
     if (error.response?.status === 401) {
-      // Clear user data from localStorage or Redux
+      const navigate = useNavigate();
+      // Clear user data from localStorage 
+      // const navigate = useNavigate();or Redux
       localStorage.removeItem("user"); // or dispatch logout action
-      window.location.href = "/login"; // Redirect to login page
+      navigate("/login"); // Redirect to login page
     }
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     

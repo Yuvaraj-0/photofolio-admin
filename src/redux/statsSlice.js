@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAPI) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   try {
     const token = localStorage.getItem('token');
     const response = await axios.get(`${API_URL}/api/stats`, {
@@ -18,7 +18,7 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
     if (error.response?.status === 401) {
       // Clear user data from localStorage or Redux
       localStorage.removeItem("user"); // or dispatch logout action
-      navigate('/login'); // Redirect to login page
+      if (navigate) navigate('/login'); // Redirect to login page
     }
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     

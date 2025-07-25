@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   return {
     plugins: [react()],
-    base: '/Photobooth/', // very important
+    base: '/', // very important
     server: {
       proxy: {
         '/api': {

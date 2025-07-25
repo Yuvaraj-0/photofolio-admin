@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-<<<<<<< HEAD
-=======
 
->>>>>>> Make image preview section scrollable and keep upload button visible
 const API_URL = import.meta.env.VITE_API_URL;
 // Async thunks to fetch albums and photos by album
 export const fetchAlbums = createAsyncThunk('gallery/fetchAlbums', async () => {

@@ -23,6 +23,7 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
       // const navigate = useNavigate();or Redux
       localStorage.removeItem("user"); // or dispatch logout action
       // navigate("/login"); // Redirect to login page
+      window.location.href = "/login";
     }
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     

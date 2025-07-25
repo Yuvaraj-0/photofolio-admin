@@ -11,7 +11,9 @@ export default function AdminLogin() {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3002';
+
 
 
   const handleChange = (e) => {
@@ -24,7 +26,11 @@ export default function AdminLogin() {
     setError('');
     
     try {
+<<<<<<< HEAD
+      const response = await axios.post(`${BASE_URL}/api/auth/admin/login`, formData);
+=======
       const response = await axios.post(`${API_URL}/api/auth/admin/login`, formData);
+>>>>>>> Make image preview section scrollable and keep upload button visible
 
       // Save token to localStorage (optional but recommended)
       localStorage.setItem('token', response.data.token);

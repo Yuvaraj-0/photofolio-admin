@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+<<<<<<< HEAD
+=======
 
+>>>>>>> Make image preview section scrollable and keep upload button visible
 const API_URL = import.meta.env.VITE_API_URL;
 // Async thunks to fetch albums and photos by album
 export const fetchAlbums = createAsyncThunk('gallery/fetchAlbums', async () => {
@@ -24,7 +27,9 @@ export const deleteImage = createAsyncThunk(
       const token = localStorage.getItem('token');
       if (!token) throw new Error('Authentication token not found');
 
-      await axios.delete('${API_URL}/api/images', {
+
+      await axios.delete(`${API_URL}/api/images`, {
+
         data: { public_id },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +49,7 @@ export const deleteImage = createAsyncThunk(
 export const uploadImages = createAsyncThunk(
   'gallery/uploadImages',
   async ({ images, album }) => {
-    const API_URL = import.meta.env.VITE_API_URL;
+   
     const formData = new FormData();
 
     // images should be array of File objects; confirm this in your component

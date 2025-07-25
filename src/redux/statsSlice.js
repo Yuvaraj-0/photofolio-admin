@@ -1,41 +1,30 @@
+import { useNavigate } from 'react-router-dom';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Accept navigate as an argument in thunk payload
-export const fetchStats = createAsyncThunk(
-  'stats/fetchStats',
-  async ({ navigate }, thunkAPI) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/api/stats`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(response.data)
-      return response.data;
+export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAPI) => {
+  const navigate = useNavigate();
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(`${API_URL}/api/stats`, {
       
-    } catch (error) {
-      
-        console.error('fetchStats error:', error);
-      
-        if (error.response?.status === 401) {
-          localStorage.removeItem('user');
-          if (navigate) navigate('/login');  // safe call if navigate exists
-        }
-      
-        const message =
-          error.response?.data?.message || error.message || 'Unknown error occurred';
-        return thunkAPI.rejectWithValue(message);
-      }
-      
-    //   if (error.response?.status === 401) {
-    //     localStorage.removeItem('user');
-    //     navigate('/login'); // navigate called here, passed from component
-    //   }
-    //   return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    // }
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 401) {
+      // Clear user data from localStorage or Redux
+      localStorage.removeItem("user"); // or dispatch logout action
+      navigate('/login'); // Redirect to login page
+    }
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+    
+
   }
+}
 );
 
 const statsSlice = createSlice({

@@ -11,6 +11,8 @@ export default function AdminLogin() {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +24,7 @@ export default function AdminLogin() {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:3002/api/auth/admin/login', formData);
+      const response = await axios.post(`${API_URL}/api/auth/admin/login`, formData);
 
       // Save token to localStorage (optional but recommended)
       localStorage.setItem('token', response.data.token);

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAPI) => {
   const navigate = useNavigate();
   try {

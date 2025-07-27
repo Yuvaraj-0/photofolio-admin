@@ -18,6 +18,7 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
 
     const expired = message.toLowerCase().includes("expired") || message.toLowerCase().includes("invalid token");
     if (expired) {
+      console.log("token expired")
       localStorage.removeItem("token"); // clear token on expiration
     }
     // if (error.response?.status === 401) {

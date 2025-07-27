@@ -32,7 +32,9 @@ export default function Dashboard() {
  
   useEffect(() => {
     if (error?.expired) {
+      console.log("-->>hiting front")
       navigate('/login');
+      console.log("hitted Succful<---")
     }
   }, [error, navigate]);
   

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/authSlice'; // your auth slice action
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { useEffect } from 'react';
 export default function AdminLogin() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,11 @@ const BASE_URL = import.meta.env.VITE_API_URL;
       setLoading(false);
     }
   };
-  
+  useEffect(() => {
+    if (error?.expired) {
+      navigate('/login');
+    }
+  }, [error]);
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 300, margin: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <input

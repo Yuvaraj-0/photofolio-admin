@@ -17,6 +17,10 @@ export default function Dashboard() {
   const loading = useSelector(state => state.stats.loading);
   const error = useSelector(state => state.stats.error);
 
+ 
+
+  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -25,6 +29,13 @@ export default function Dashboard() {
     }
     dispatch(fetchStats({ navigate }));
   }, [dispatch, navigate]);
+ 
+  useEffect(() => {
+    if (error?.expired) {
+      navigate('/login');
+    }
+  }, [error, navigate]);
+  
 
   if (loading) return <p className="p-6">Loading stats...</p>;
   if (error) return <p className="p-6 text-red-600">Error: {error}</p>;

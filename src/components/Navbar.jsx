@@ -1,3 +1,7 @@
+
+
+
+
 import { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +21,12 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dispatch = useDispatch();
+  // Add inside the Navbar component
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  navigate("/login");
+};
+
 
   const navItems = [
     { to: '/admin/dashboard', label: 'Dashboard', icon: HomeIcon },
@@ -56,6 +66,38 @@ export default function Navbar() {
               </button>
             </div>
             <nav className="flex flex-col p-2">
+  {navItems.map((item) => (
+    <NavLink
+      key={item.to}
+      to={item.to}
+      onClick={() => setSidebarOpen(false)}
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-3 py-2 rounded transition ${
+          isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+        }`
+      }
+    >
+      <item.icon className="w-5 h-5" />
+      {item.label}
+    </NavLink>
+  ))}
+
+  {/* 🔴 Logout Button */}
+  <button
+    onClick={handleLogout}
+    className="mt-4 flex items-center gap-3 px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white transition"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 
+        01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+    </svg>
+    Logout
+  </button>
+</nav>
+
+            {/* <nav className="flex flex-col p-2">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}
@@ -71,7 +113,7 @@ export default function Navbar() {
                   {item.label}
                 </NavLink>
               ))}
-            </nav>
+            </nav> */}
           </div>
         )}
         {/* Overlay for closing dropdown when clicking outside */}

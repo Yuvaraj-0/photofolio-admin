@@ -14,12 +14,17 @@ export const fetchStats = createAsyncThunk('stats/fetchStats', async (_, thunkAP
     });
     
     return response.data;
-  } catch (error) {
-    if (error.response?.status === 401) {
-      // Clear user data from localStorage or Redux
-      localStorage.removeItem("user"); // or dispatch logout action
-      if (navigate) navigate('/login'); // Redirect to login page
+  } catch (error) {const message = error.response?.data?.message || error.message;
+
+    const expired = message.toLowerCase().includes("expired") || message.toLowerCase().includes("invalid token");
+    if (expired) {
+      localStorage.removeItem("token"); // clear token on expiration
     }
+    // if (error.response?.status === 401) {
+    //   // Clear user data from localStorage or Redux
+    //   localStorage.removeItem("user"); // or dispatch logout action
+    //   if (navigate) navigate('/login'); // Redirect to login page
+    // }
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     
 

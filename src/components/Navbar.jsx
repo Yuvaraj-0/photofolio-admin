@@ -33,6 +33,7 @@ const handleLogout = () => {
     { to: '/uploads', label: 'Uploads', icon: ArrowUpTrayIcon },
     { to: '/edit-content', label: 'Edit Content', icon: PencilSquareIcon },
   ];
+ 
 
   return (
     <div className="w-full flex justify-between items-center px-6 py-4 bg-white shadow fixed top-0 left-0 right-0 z-40 h-16">
@@ -41,7 +42,12 @@ const handleLogout = () => {
         Dashboard
       </div>
      
-      <Link to="/inquiry">Notification</Link>
+    
+      <Link to="/inquiry" className="relative">
+        Notifications
+       
+      </Link>
+
 
       {/* Right: Upload + Menu */}
       <div className="flex items-center gap-4 relative">
@@ -97,23 +103,7 @@ const handleLogout = () => {
   </button>
 </nav>
 
-            {/* <nav className="flex flex-col p-2">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setSidebarOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2 rounded transition ${
-                      isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
-                    }`
-                  }
-                >
-                  <item.icon className="w-5 h-5" />
-                  {item.label}
-                </NavLink>
-              ))}
-            </nav> */}
+          
           </div>
         )}
         {/* Overlay for closing dropdown when clicking outside */}

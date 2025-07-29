@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadImages, clearUploadStatus } from '../redux/imageUploadSlice';
 import { fetchClientAlbums } from '../redux/clientAlbumSlice'; // Assuming you have this thunk
+import imageCompression from 'browser-image-compression';
 
 export default function UploadImages() {
   const dispatch = useDispatch();
@@ -37,11 +38,43 @@ export default function UploadImages() {
   }, [selectedFiles]);
 
   // Handle file input or drag-drop
-  const handleFilesChange = (e) => {
-    const files = e.target.files;
-    if (files.length) {
-      setSelectedFiles(Array.from(files));
-    }
+  // const handleFilesChange = (e) => {
+  //   const files = e.target.files;
+  //   if (files.length) {
+  //     setSelectedFiles(Array.from(files));
+  //   }
+  // };
+  const handleFilesChange = async (e) => {
+    const rawFiles = Array.from(e.target.files);
+    if (!rawFiles.length) return;
+  
+    const compressedFiles = await Promise.all(
+      rawFiles.map(async (file) => {
+        const options = {
+          maxSizeMB: 1.2,               // Limit size to ~1.2MB
+          maxWidthOrHeight: 1920,       // Resize large images
+          useWebWorker: true,           // Enable web worker for performance
+        };
+  
+        try {
+          const compressedFile = await imageCompression(file, options);
+          compressedFile.name = file.name; // preserve original filename
+          return compressedFile;
+        } catch (err) {
+          console.error('❌ Compression failed for:', file.name, err);
+          return file; // fallback to original if compression fails
+        }
+      })
+    );
+  
+    setSelectedFiles(compressedFiles);
+  
+    // generate preview URLs from compressed images
+    const previewUrls = compressedFiles.map(file => URL.createObjectURL(file));
+    setPreviewUrls(previewUrls);
+  
+    // clean up previews on unmount or when files change
+    return () => previewUrls.forEach(url => URL.revokeObjectURL(url));
   };
 
   // Upload images

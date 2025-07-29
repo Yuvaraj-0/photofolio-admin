@@ -9,6 +9,7 @@ import clientImageReducer from './clientImage';
 import inquiryReducer from './inquirySlice';
 import authReducer from './authSlice';
 import imageReducer from './adminAproval';
+// import notification from './notificationSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -20,6 +21,7 @@ export const store = configureStore({
     clientImages: clientImageReducer,
     inquiry: inquiryReducer,
     images: imageReducer,
+    // notify:notification,
     
   },
 });
